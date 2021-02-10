@@ -23,7 +23,7 @@ public class Service {
     @Autowired
     private DeptRepository deptRepository;
 
-    public void run(){
+    public void insertIntoStudentEnrollUsingJPA(){
 
         Dept computerEngg = deptRepository.findByBranchCode(new BigDecimal("7"));
 
@@ -41,11 +41,13 @@ public class Service {
 
         List<StudentEnroll> students = studentRepository.findAll();
 
-        students.forEach(System.out::println);
+
+        System.out.println("ALL STUDENTS : \n"+students);
 
         List<Dept> allDept = deptRepository.findAll();
 
-        allDept.forEach(System.out::println);
+
+        System.out.println("ALL DEPT : \n"+allDept);
 
 
     }

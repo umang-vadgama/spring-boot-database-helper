@@ -1,6 +1,8 @@
 package com.swt.database;
 
 
+import com.swt.database.jdbctemplate.Student;
+import com.swt.database.jdbctemplate.StudentJDBCTemplate;
 import com.swt.database.jpa.Dept;
 import com.swt.database.jpa.DeptRepository;
 import com.swt.database.jpa.StudentEnroll;
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.quartz.QuartzProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -25,7 +29,10 @@ import java.util.List;
 public class RunProcess  implements CommandLineRunner{
 
     @Autowired
-    private Service service;
+    private Service usingJPA;
+
+    @Autowired
+    private StudentJDBCTemplate usingJdbcTemplate;
 
     public static void main(String[] args) {
         SpringApplication.run(RunProcess.class,args);
@@ -35,7 +42,32 @@ public class RunProcess  implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        service.run();
+
+        System.out.println("  ********* USING JPA *********  ");
+        //usingJPA.insertIntoStudentEnrollUsingJPA();
+
+        System.out.println("  ********* USING JDBC TEMPLATE *********  ");
+
+        Student student = new Student();
+
+        student.setfName("Jack");
+        student.setDateOfBirth(Date.valueOf("1996-10-10"));
+        student.setContactNumber("132131");
+        student.setBranchId(7);
+
+        Student student2 = new Student();
+
+        student2.setfName("Kim");
+        student2.setDateOfBirth(Date.valueOf("1996-01-28"));
+        student2.setContactNumber("132131454");
+        student2.setBranchId(7);
+
+        usingJdbcTemplate.insertIntoStudentEnroll(student);
+        usingJdbcTemplate.insertIntoStudentEnroll(student2);
+        usingJdbcTemplate.getAllStudentEnroll();
+        //usingJdbcTemplate.updateStudentNameByIdInStudentEnroll(4,"Tom");
+        //usingJdbcTemplate.deleteStudentInStudentEnroll(5);
+
     }
 
 
