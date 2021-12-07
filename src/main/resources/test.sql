@@ -1,8 +1,12 @@
+create schema student801;
+
 CREATE TABLE student801.dept (
 	branch_code numeric(10) NOT NULL,
 	branch_name varchar(50) NULL,
 	CONSTRAINT dept_pk PRIMARY KEY (branch_code)
 );
+
+insert into student801.dept (branch_code,branch_name) values (7,'CE');
 
 CREATE TABLE student801.student_enroll (
 	student_id numeric NOT NULL ,
@@ -15,6 +19,6 @@ CREATE TABLE student801.student_enroll (
 	CONSTRAINT student_enroll_fk FOREIGN KEY (branch_id) REFERENCES student801.dept(branch_code)
 );
 
-create sequence  student_enroll_seq start with 1 owned by student801.student_enroll.student_id;
+create sequence  student801.student_enroll_seq start with 1 owned by student801.student_enroll.student_id;
 
-alter table student801.student_enroll alter column student_id set default nextval('student_enroll_seq'::regclass);
+alter table student801.student_enroll alter column student_id set default nextval('student801.student_enroll_seq'::regclass);

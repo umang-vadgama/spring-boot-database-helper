@@ -12,6 +12,8 @@ public class StudentEnroll {
 
 
     @Id
+    @SequenceGenerator(name = "student_id_generator", sequenceName = "student_enroll_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_id_generator")
     public BigDecimal studentId;
 
     public String studentFname;
@@ -31,9 +33,8 @@ public class StudentEnroll {
 
     public StudentEnroll(){}
 
-    public StudentEnroll(BigDecimal studentId, String studentFname, String studentLname, String contactNumber, Date dateOfBirth, Dept branchId){
+    public StudentEnroll( String studentFname, String studentLname, String contactNumber, Date dateOfBirth, Dept branchId){
 
-        this.studentId=studentId;
         this.studentFname=studentFname;
         this.studentLname=studentLname;
         this.contactNumber=contactNumber;
